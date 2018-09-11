@@ -1,0 +1,60 @@
+# Copyright (C) 2018 Google LLC
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+_variables:
+  from: &from gcr.io/google-appengine/openjdk
+  gpg: &gpg F1182E81C792928921DBCAB4CFCA4A29D26468DE
+  gosu: &gosu
+    version: '1.10'
+    gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+
+versions:
+  - dir: '7/debian9/7.2'
+    repo: sonarqube7
+    tags:
+      - '7.2.1-debian9'
+      - '7.2-debian9'
+      - '7-debian9'
+      - '7.2.1'
+      - '7.2'
+      - '7'
+      - 'latest'
+    from: *from
+    packages:
+      gosu: *gosu
+      sonarqube:
+        version: '7.2.1'
+        gpg: *gpg
+
+  - dir: '6/debian9/6.7'
+    repo: sonarqube6
+    tags:
+      - '6.7.4-debian9'
+      - '6.7-debian9'
+      - '6-debian9'
+      - '6.7.4'
+      - '6.7'
+      - '6'
+      - 'lts'
+      - 'latest'
+    from: *from
+    packages:
+      gosu: *gosu
+      sonarqube:
+        version: '6.7.4'
+        gpg: *gpg
+
+cloudbuild:
+  enable_parallel: false

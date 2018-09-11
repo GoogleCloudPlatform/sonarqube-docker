@@ -1,0 +1,54 @@
+FROM gcr.io/google-appengine/debian9 as downloader
+{{- $gosu := index .Packages "gosu" }}
+{{- $sonarqube := index .Packages "sonarqube" }}
+ARG SONAR_GPG={{ $sonarqube.Gpg }}
+ARG SONAR_VERSION={{ $sonarqube.Version }}
+ARG GOSU_VERSION={{ $gosu.Version }}
+ARG GOSU_GPG={{ $gosu.Gpg }}
+
+RUN set -x \
+ && apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr ca-certificates wget apache2-utils git unzip \
+ && wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
+ && wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+ && wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
+ && export GNUPGHOME="$(mktemp -d)" \
+ && {{ `gpg --keyserver $server --recv-keys $GOSU_GPG` | KeyServersRetryLoop "  " }} \
+ && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+ && {{ `gpg --keyserver $server --recv-keys $SONAR_GPG` | KeyServersRetryLoop "  " }} \
+ && wget -q -O /opt/sonarqube.zip https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+ && wget -q -O /opt/sonarqube.zip.asc https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+ && gpg --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
+ && unzip /opt/sonarqube.zip -d /opt/ \
+ && mv /opt/sonarqube-$SONAR_VERSION /opt/sonarqube \
+ && cd /usr/local/src \
+ && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
+ && rm -rf /opt/sonarqube/bin/*
+
+
+FROM {{ .From }}
+
+ENV SONARQUBE_HOME=/opt/sonarqube \
+  SONAR_VERSION={{ $sonarqube.Version }} \
+  # Database configuration
+  # Defaults to using H2
+  SONARQUBE_JDBC_USERNAME=sonar \
+  SONARQUBE_JDBC_PASSWORD=sonar \
+  SONARQUBE_JDBC_URL=
+
+# Http port
+EXPOSE 9000
+COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
+COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
+COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
+COPY --from=downloader /opt/sonarqube /opt/sonarqube
+RUN set -x \
+  && groupadd -r sonarqube && useradd -r -g sonarqube sonarqube \
+  && chmod +x /usr/local/bin/gosu \
+  && chown -R sonarqube:sonarqube /opt/sonarqube \
+  && gosu nobody true
+
+VOLUME "$SONARQUBE_HOME/data"
+
+WORKDIR $SONARQUBE_HOME
+COPY run.sh $SONARQUBE_HOME/bin/
+ENTRYPOINT ["./bin/run.sh"]
