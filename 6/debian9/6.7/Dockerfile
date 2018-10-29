@@ -41,8 +41,8 @@ RUN set -x \
       && found=yes && break; \
   done; \
   test -n "$found" \
- && wget -q -O /opt/sonarqube.zip https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
- && wget -q -O /opt/sonarqube.zip.asc https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+ && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+ && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
  && gpg --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
  && unzip /opt/sonarqube.zip -d /opt/ \
  && mv /opt/sonarqube-$SONAR_VERSION /opt/sonarqube \
