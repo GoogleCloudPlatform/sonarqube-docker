@@ -1,6 +1,6 @@
 FROM gcr.io/google-appengine/debian9 as downloader
 ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
-ARG SONAR_VERSION=6.7.4
+ARG SONAR_VERSION=6.7.5
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -54,7 +54,7 @@ RUN set -x \
 FROM gcr.io/google-appengine/openjdk
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION=6.7.4 \
+  SONAR_VERSION=6.7.5 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \

@@ -41,10 +41,10 @@ versions:
   - dir: '6/debian9/6.7'
     repo: sonarqube6
     tags:
-      - '6.7.4-debian9'
+      - '6.7.5-debian9'
       - '6.7-debian9'
       - '6-debian9'
-      - '6.7.4'
+      - '6.7.5'
       - '6.7'
       - '6'
       - 'lts'
@@ -53,7 +53,7 @@ versions:
     packages:
       gosu: *gosu
       sonarqube:
-        version: '6.7.4'
+        version: '6.7.5'
         gpg: *gpg
 
 cloudbuild:
