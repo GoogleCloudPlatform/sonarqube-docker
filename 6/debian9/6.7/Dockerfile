@@ -21,11 +21,11 @@ RUN set -x \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
   ; do \
-    gpg --keyserver $server --recv-keys $GOSU_GPG \
+    gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
       && found=yes && break; \
   done; \
   test -n "$found" \
- && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+ && gpg --no-tty --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
  && found='' && \
   for server in \
     pool.sks-keyservers.net \
@@ -37,13 +37,13 @@ RUN set -x \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
   ; do \
-    gpg --keyserver $server --recv-keys $SONAR_GPG \
+    gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG \
       && found=yes && break; \
   done; \
   test -n "$found" \
  && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
  && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
- && gpg --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
+ && gpg --no-tty --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
  && unzip /opt/sonarqube.zip -d /opt/ \
  && mv /opt/sonarqube-$SONAR_VERSION /opt/sonarqube \
  && cd /usr/local/src \
