@@ -21,30 +21,30 @@ _variables:
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 versions:
-  - dir: '7/debian9/7.2'
+  - dir: '7/debian9/7.6'
     repo: sonarqube7
     tags:
-      - '7.2.1-debian9'
-      - '7.2-debian9'
+      - '7.6.1-debian9'
+      - '7.6-debian9'
       - '7-debian9'
-      - '7.2.1'
-      - '7.2'
+      - '7.6.1'
+      - '7.6'
       - '7'
       - 'latest'
     from: *from
     packages:
       gosu: *gosu
       sonarqube:
-        version: '7.2.1'
+        version: '7.6.1'
         gpg: *gpg
 
   - dir: '6/debian9/6.7'
     repo: sonarqube6
     tags:
-      - '6.7.5-debian9'
+      - '6.7.6-debian9'
       - '6.7-debian9'
       - '6-debian9'
-      - '6.7.5'
+      - '6.7.6'
       - '6.7'
       - '6'
       - 'lts'
@@ -53,7 +53,7 @@ versions:
     packages:
       gosu: *gosu
       sonarqube:
-        version: '6.7.5'
+        version: '6.7.6'
         gpg: *gpg
 
 cloudbuild:
