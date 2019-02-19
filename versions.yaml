@@ -24,10 +24,8 @@ versions:
   - dir: '7/debian9/7.6'
     repo: sonarqube7
     tags:
-      - '7.6.1-debian9'
       - '7.6-debian9'
       - '7-debian9'
-      - '7.6.1'
       - '7.6'
       - '7'
       - 'latest'
@@ -35,7 +33,7 @@ versions:
     packages:
       gosu: *gosu
       sonarqube:
-        version: '7.6.1'
+        version: '7.6'
         gpg: *gpg
 
   - dir: '6/debian9/6.7'
