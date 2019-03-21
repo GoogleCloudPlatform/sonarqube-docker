@@ -31,13 +31,9 @@ teardown:
 
 target: some-sonarqube-$UNIQUE-id
 tests:
-- name: Test SonarQube connection
-  command: ['wget', '-O', '-', 'http://localhost:9000']
+- name: Test SonarQube metrics endpoint
+  command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
   expect:
-    stdout:
-      matches: "<title>SonarQube</title>"
-- name: Test SonarQube authentication
-  command: ['wget', '-O', '-', '--http-user=admin', '--http-password=admin', '--auth-no-challenge', 'http://localhost:9000/api/user_tokens/search']
-  expect:
-    stdout:
-      matches: 'admin'
+    exitCode:
+      equals: 0
+
