@@ -4,6 +4,9 @@ ARG SONAR_VERSION=7.6
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
+COPY license-checksum /
+COPY addons-checksum  /
+
 RUN set -x \
  && apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr ca-certificates wget apache2-utils git unzip \
  && wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
@@ -49,6 +52,21 @@ RUN set -x \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
+
+
+RUN  set -x \
+ && mkdir /opt/tmp \
+ && wget -q -O /opt/tmp/LICENSE "https://raw.githubusercontent.com/dmeiners88/sonarqube-prometheus-exporter/develop/LICENSE" \
+ && wget -q -O /opt/tmp/prometheus-exporter-1.0.0.jar "https://github.com/dmeiners88/sonarqube-prometheus-exporter/releases/download/v1.0.0-SNAPSHOT-2018-07-04/sonar-prometheus-exporter-1.0.0-SNAPSHOT.jar" \
+ && cd /opt/tmp \
+ && if [ "`sha256sum -c /license-checksum`" != 'LICENSE: OK' ] ; then \
+       exit 2; \
+    fi \
+ && if ["`sha256sum -c /addons-checksum`"] != 'prometheus-exporter-1.0.0.jar: OK'] ; then \
+       exit 3; \
+    fi \
+ && mv /opt/tmp/prometheus-exporter-1.0.0.jar /opt/sonarqube/extensions/plugins/ \
+ && rm -rf /opt/tmp
 
 
 FROM gcr.io/google-appengine/openjdk
