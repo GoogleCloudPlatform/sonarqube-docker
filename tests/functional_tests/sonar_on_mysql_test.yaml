@@ -41,3 +41,11 @@ tests:
   expect:
     stdout:
       matches: 'admin'
+- name: 'test status in REST API'
+  command:
+    - /bin/bash
+    - -c
+    - curl -s http://localhost:9000/api/prometheus/metrics
+  expect:
+    stdout:
+      matches: ".*\"status\":\"success\".*"
