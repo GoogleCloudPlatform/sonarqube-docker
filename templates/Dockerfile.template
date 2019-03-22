@@ -7,9 +7,6 @@ ARG SONAR_VERSION={{ $sonarqube.Version }}
 ARG GOSU_VERSION={{ $gosu.Version }}
 ARG GOSU_GPG={{ $gosu.Gpg }}
 
-COPY license-checksum /
-COPY addons-checksum  /
-
 RUN set -x \
  && apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr ca-certificates wget apache2-utils git unzip \
  && wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
@@ -29,6 +26,7 @@ RUN set -x \
  && rm -rf /opt/sonarqube/bin/*
 
 {{- if (eq $exporter "true") }}
+COPY license-checksum /
 
 RUN  set -x \
    && mkdir /opt/tmp \
@@ -40,7 +38,7 @@ RUN  set -x \
          exit 2; \
       fi \
    && mv /opt/tmp/prometheus-exporter-1.0.0.jar /opt/sonarqube/extensions/plugins/ \
-   && mv /opt/tmp/LICENSE /opt/sonarqube/extensions/plugins/LICENSE-prometheus-exporter \
+   && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp 
 {{- end }}
 

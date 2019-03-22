@@ -4,9 +4,6 @@ ARG SONAR_VERSION=6.7.6
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
-COPY license-checksum /
-COPY addons-checksum  /
-
 RUN set -x \
  && apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr ca-certificates wget apache2-utils git unzip \
  && wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
