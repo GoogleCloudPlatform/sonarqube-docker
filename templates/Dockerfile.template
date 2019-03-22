@@ -29,6 +29,7 @@ RUN set -x \
  && rm -rf /opt/sonarqube/bin/*
 
 {{- if (eq $exporter "true") }}
+
 RUN  set -x \
    && mkdir /opt/tmp \
    && wget -q -O /opt/tmp/LICENSE "https://raw.githubusercontent.com/dmeiners88/sonarqube-prometheus-exporter/develop/LICENSE" \
