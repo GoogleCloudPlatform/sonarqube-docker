@@ -41,6 +41,8 @@ versions:
 
   - dir: '6/debian9/6.7'
     repo: sonarqube6
+    templateArgs:
+      exporter: 'false'
     tags:
       - '6.7.6-debian9'
       - '6.7-debian9'
