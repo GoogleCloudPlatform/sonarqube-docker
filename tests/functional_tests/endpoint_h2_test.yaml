@@ -27,5 +27,5 @@ tests:
 - name: test REST API
   command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
   expect:
-    exitCode:
-      equals: 0
+    stdout:
+      contain: '# HELP sonarqube_vulnerabilities Vulnerabilities'
