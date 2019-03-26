@@ -66,6 +66,7 @@ COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
 COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
 COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
 COPY --from=downloader /opt/sonarqube /opt/sonarqube
+
 RUN set -x \
   && groupadd -r sonarqube && useradd -r -g sonarqube sonarqube \
   && chmod +x /usr/local/bin/gosu \
