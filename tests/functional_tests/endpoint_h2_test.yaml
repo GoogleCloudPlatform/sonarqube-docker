@@ -1,0 +1,31 @@
+# Copyright (C) 2018 Google LLC
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+setup:
+- command: [docker, run, --name, some-sonarqube-$UNIQUE-id, -d, '$IMAGE']
+- command: [sleep, 120s]
+
+teardown:
+- command: [docker, logs, some-sonarqube-$UNIQUE-id]
+- command: [docker, rm, -f, some-sonarqube-$UNIQUE-id]
+
+target: some-sonarqube-$UNIQUE-id
+tests:
+- name: test REST API
+  command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
+  expect:
+    stdout:
+      contain: '# HELP sonarqube_vulnerabilities Vulnerabilities'

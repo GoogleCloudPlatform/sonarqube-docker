@@ -19,10 +19,15 @@ _variables:
   gosu: &gosu
     version: '1.10'
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+  excludeTests: &PrometheusPlugin
+  - tests/functional_tests/endpoint_mysql_test.yaml
+  - tests/functional_tests/endpoint_h2_test.yaml
 
 versions:
   - dir: '7/debian9/7.6'
     repo: sonarqube7
+    templateArgs:
+      exporter: 'true'
     tags:
       - '7.6-debian9'
       - '7-debian9'
@@ -53,6 +58,8 @@ versions:
       sonarqube:
         version: '6.7.6'
         gpg: *gpg
+    excludeTests: *PrometheusPlugin
+
 
 cloudbuild:
   enable_parallel: false

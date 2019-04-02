@@ -1,0 +1,38 @@
+# Copyright (C) 2018 Google LLC
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+setup:
+- command: [docker, network, create, -d, bridge, some-network-$UNIQUE-id]
+- command: [sleep, 2s]
+- command: [docker, run, --net, some-network-$UNIQUE-id, --name, some-mysql-$UNIQUE-id, -e, MYSQL_ROOT_PASSWORD=some-password, -d, launcher.gcr.io/google/mysql5]
+- command: [sleep, 30s]
+- command: [docker, exec, some-mysql-$UNIQUE-id, mysql, -psome-password, -e, 'CREATE DATABASE sonar;']
+- command: [sleep, 2s]
+- command: [docker, run, -d, -e, SONARQUBE_JDBC_USERNAME=root, -e, SONARQUBE_JDBC_PASSWORD=some-password, -e, "SONARQUBE_JDBC_URL=jdbc:mysql://some-mysql-$UNIQUE-id:3306/sonar?useUnicode=true&characterEncoding=utf8&useSSL=true&verifyServerCertificate=false", --name, some-sonarqube-$UNIQUE-id, --net, some-network-$UNIQUE-id, $IMAGE]
+- command: [sleep, 120s]
+teardown:
+- command: [docker, logs, some-sonarqube-$UNIQUE-id]
+- command: [docker, logs, some-mysql-$UNIQUE-id]
+- command: [docker, rm, -f, some-sonarqube-$UNIQUE-id]
+- command: [docker, rm, -f, some-mysql-$UNIQUE-id]
+- command: [docker, network, rm, some-network-$UNIQUE-id]
+
+target: some-sonarqube-$UNIQUE-id
+tests:
+- name: test REST API
+  command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
+  expect:
+    stdout:
+      contain: '# HELP sonarqube_vulnerabilities Vulnerabilities'

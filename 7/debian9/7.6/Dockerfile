@@ -49,7 +49,20 @@ RUN set -x \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
+COPY license-checksum /
 
+RUN  set -x \
+   && mkdir /opt/tmp \
+   && wget -q -O /opt/tmp/LICENSE "https://raw.githubusercontent.com/dmeiners88/sonarqube-prometheus-exporter/develop/LICENSE" \
+   && wget -q -O /opt/tmp/prometheus-exporter-1.0.0.jar "https://github.com/dmeiners88/sonarqube-prometheus-exporter/releases/download/v1.0.0-SNAPSHOT-2018-07-04/sonar-prometheus-exporter-1.0.0-SNAPSHOT.jar" \
+   && cd /opt/tmp \
+   && sha256sum -c /license-checksum \
+   && if [ $? -ne 0 ] ; then \
+         exit 2; \
+      fi \
+   && mv /opt/tmp/prometheus-exporter-1.0.0.jar /opt/sonarqube/extensions/plugins/ \
+   && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
+   && rm -rf /opt/tmp
 
 FROM gcr.io/google-appengine/openjdk
 
@@ -67,6 +80,8 @@ COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
 COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
 COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
 COPY --from=downloader /opt/sonarqube /opt/sonarqube
+COPY --from=downloader /usr/share/LICENSE-prometheus-exporter /usr/share/LICENSE-prometheus-exporter
+
 RUN set -x \
   && groupadd -r sonarqube && useradd -r -g sonarqube sonarqube \
   && chmod +x /usr/local/bin/gosu \
