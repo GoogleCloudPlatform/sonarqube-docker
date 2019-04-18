@@ -73,8 +73,9 @@ RUN set -x \
   && chown -R sonarqube:sonarqube /opt/sonarqube \
   && gosu nobody true
 
-VOLUME "$SONARQUBE_HOME/data"
+VOLUME "$SONARQUBE_HOME/extensions"
 
 WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/
+
 ENTRYPOINT ["./bin/run.sh"]
