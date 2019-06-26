@@ -24,21 +24,21 @@ _variables:
   - tests/functional_tests/endpoint_h2_test.yaml
 
 versions:
-  - dir: '7/debian9/7.7'
+  - dir: '7/debian9/7.8'
     repo: sonarqube7
     templateArgs:
       exporter: 'true'
     tags:
-      - '7.7-debian9'
+      - '7.8-debian9'
       - '7-debian9'
-      - '7.7'
+      - '7.8'
       - '7'
       - 'latest'
     from: *from
     packages:
       gosu: *gosu
       sonarqube:
-        version: '7.7'
+        version: '7.8'
         gpg: *gpg
   - dir: '7/debian9/7.6'
     repo: sonarqube7
