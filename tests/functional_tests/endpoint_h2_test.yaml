@@ -15,6 +15,7 @@
 
 
 setup:
+- command: [sudo, sysctl, -w, vm.max_map_count=262144]
 - command: [docker, run, --name, some-sonarqube-$UNIQUE-id, -d, '$IMAGE']
 - command: [sleep, 120s]
 

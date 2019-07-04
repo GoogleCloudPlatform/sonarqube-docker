@@ -1,6 +1,6 @@
 FROM gcr.io/google-appengine/debian9 as downloader
 ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
-ARG SONAR_VERSION=6.7.7
+ARG SONAR_VERSION=7.8
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -49,11 +49,25 @@ RUN set -x \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
+COPY license-checksum /
+
+RUN  set -x \
+   && mkdir /opt/tmp \
+   && wget -q -O /opt/tmp/LICENSE "https://raw.githubusercontent.com/dmeiners88/sonarqube-prometheus-exporter/develop/LICENSE" \
+   && wget -q -O /opt/tmp/prometheus-exporter-1.0.0.jar "https://github.com/dmeiners88/sonarqube-prometheus-exporter/releases/download/v1.0.0-SNAPSHOT-2018-07-04/sonar-prometheus-exporter-1.0.0-SNAPSHOT.jar" \
+   && cd /opt/tmp \
+   && sha256sum -c /license-checksum \
+   && if [ $? -ne 0 ] ; then \
+         exit 2; \
+      fi \
+   && mv /opt/tmp/prometheus-exporter-1.0.0.jar /opt/sonarqube/extensions/plugins/ \
+   && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
+   && rm -rf /opt/tmp
 
 FROM gcr.io/google-appengine/openjdk
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION=6.7.7 \
+  SONAR_VERSION=7.8 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \
@@ -66,6 +80,7 @@ COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
 COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
 COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
 COPY --from=downloader /opt/sonarqube /opt/sonarqube
+COPY --from=downloader /usr/share/LICENSE-prometheus-exporter /usr/share/LICENSE-prometheus-exporter
 
 RUN set -x \
   && groupadd -r sonarqube && useradd -r -g sonarqube sonarqube \

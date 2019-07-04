@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 setup:
+- command: [sudo, sysctl, -w, vm.max_map_count=262144]
 - command: [docker, network, create, -d, bridge, some-network-$UNIQUE-id]
 - command: [sleep, 2s]
 - command: [docker, run, --net, some-network-$UNIQUE-id, --name, some-mysql-$UNIQUE-id, -e, MYSQL_ROOT_PASSWORD=some-password, -d, launcher.gcr.io/google/mysql5]
