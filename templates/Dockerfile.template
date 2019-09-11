@@ -52,6 +52,8 @@ ENV SONARQUBE_HOME=/opt/sonarqube \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
+ENV C2D_RELEASE=${SONAR_VERSION}
+
 # Http port
 EXPOSE 9000
 COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
