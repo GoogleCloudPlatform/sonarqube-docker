@@ -35,7 +35,7 @@ versions:
     packages:
       gosu: *gosu
       sonarqube:
-        version: '7.9'
+        version: '8.0'
         gpg: *gpg
 
   - dir: '7/debian9/7.9'
