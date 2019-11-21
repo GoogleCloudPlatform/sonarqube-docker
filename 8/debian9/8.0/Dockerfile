@@ -66,11 +66,13 @@ RUN  set -x \
 
 FROM gcr.io/google-appengine/debian9
 
-# Add backport
+# Add debian backport source repository
 RUN set -x \
     && echo 'deb http://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list \
     && apt update \
-    && apt install openjdk-11-jdk -y\
+    && apt install -y \
+    openjdk-11-jdk \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
