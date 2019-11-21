@@ -22,7 +22,8 @@ _variables:
 
 versions:
   - dir: '8/debian9/8.0'
-    repo: sonarqube7
+    repo: sonarqube8
+    templateSubDir: '8'
     templateArgs:
       exporter: 'true'
     tags:
@@ -39,6 +40,7 @@ versions:
         gpg: *gpg
   - dir: '7/debian9/7.8'
     repo: sonarqube7
+    templateSubDir: '7'
     templateArgs:
       exporter: 'true'
     tags:
@@ -54,6 +56,7 @@ versions:
         gpg: *gpg
   - dir: '7/debian9/7.6'
     repo: sonarqube7
+    templateSubDir: '7'
     templateArgs:
       exporter: 'true'
     tags:
