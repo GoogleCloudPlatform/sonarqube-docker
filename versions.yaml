@@ -38,6 +38,23 @@ versions:
       sonarqube:
         version: '8.0'
         gpg: *gpg
+  - dir: '7/debian9/7.9'
+    repo: sonarqube7
+    templateSubDir: '8'
+    templateArgs:
+      exporter: 'true'
+    tags:
+      - '7.9-debian9'
+      - '7-debian9'
+      - '7.9'
+      - '7'
+      - 'latest'
+    from: *from
+    packages:
+      gosu: *gosu
+      sonarqube:
+        version: '8.0'
+        gpg: *gpg
   - dir: '7/debian9/7.8'
     repo: sonarqube7
     templateSubDir: '7'
@@ -45,9 +62,7 @@ versions:
       exporter: 'true'
     tags:
       - '7.8-debian9'
-      - '7-debian9'
       - '7.8'
-      - '7'
     from: *from
     packages:
       gosu: *gosu

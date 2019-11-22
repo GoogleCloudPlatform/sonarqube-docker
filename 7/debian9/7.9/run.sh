@@ -1,5 +1,4 @@
-# Copyright (C) 2018 Google LLC
-#
+#!/bin/bash
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -14,19 +13,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-setup:
-- command: [sudo, sysctl, -w, vm.max_map_count=262144]
-- command: [docker, run, --name, some-sonarqube-$UNIQUE-id, -d, '$IMAGE']
-- command: [sleep, 90s]
+set -e
 
-teardown:
-- command: [docker, logs, some-sonarqube-$UNIQUE-id]
-- command: [docker, rm, -f, some-sonarqube-$UNIQUE-id]
+if [ "${1:0:1}" != '-' ]; then
+  exec "$@"
+fi
 
-target: some-sonarqube-$UNIQUE-id
-tests:
-- name: test REST API
-  command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
-  expect:
-    stdout:
-      contain: '# HELP sonarqube_vulnerabilities Vulnerabilities'
+chown -R sonarqube:sonarqube $SONARQUBE_HOME
+
+exec gosu sonarqube \
+  java -jar lib/sonar-application-$SONAR_VERSION.jar \
+  -Dsonar.log.console=true \
+  -Dsonar.jdbc.username="$SONARQUBE_JDBC_USERNAME" \
+  -Dsonar.jdbc.password="$SONARQUBE_JDBC_PASSWORD" \
+  -Dsonar.jdbc.url="$SONARQUBE_JDBC_URL" \
+  -Dsonar.web.javaAdditionalOpts="$SONARQUBE_WEB_JVM_OPTS -Djava.security.egd=file:/dev/./urandom" \
+  "$@"
