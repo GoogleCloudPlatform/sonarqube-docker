@@ -21,16 +21,48 @@ _variables:
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 versions:
+  - dir: '8/debian9/8.0'
+    repo: sonarqube8
+    templateSubDir: '8'
+    templateArgs:
+      exporter: 'true'
+    tags:
+      - '8.0-debian9'
+      - '8-debian9'
+      - '8.0'
+      - '8'
+      - 'latest'
+    from: *from
+    packages:
+      gosu: *gosu
+      sonarqube:
+        version: '8.0'
+        gpg: *gpg
+  - dir: '7/debian9/7.9'
+    repo: sonarqube7
+    templateSubDir: '8'
+    templateArgs:
+      exporter: 'true'
+    tags:
+      - '7.9-debian9'
+      - '7-debian9'
+      - '7.9'
+      - '7'
+      - 'latest'
+    from: *from
+    packages:
+      gosu: *gosu
+      sonarqube:
+        version: '8.0'
+        gpg: *gpg
   - dir: '7/debian9/7.8'
     repo: sonarqube7
+    templateSubDir: '7'
     templateArgs:
       exporter: 'true'
     tags:
       - '7.8-debian9'
-      - '7-debian9'
       - '7.8'
-      - '7'
-      - 'latest'
     from: *from
     packages:
       gosu: *gosu
@@ -39,6 +71,7 @@ versions:
         gpg: *gpg
   - dir: '7/debian9/7.6'
     repo: sonarqube7
+    templateSubDir: '7'
     templateArgs:
       exporter: 'true'
     tags:
