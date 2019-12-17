@@ -3,6 +3,7 @@ FROM gcr.io/google-appengine/debian9 as downloader
 {{- $sonarqube := index .Packages "sonarqube" }}
 {{- $exporter := index .TemplateArgs "exporter" }}
 {{- $c2dRelease := index .TemplateArgs "c2dRelease" }}
+
 ARG SONAR_GPG={{ $sonarqube.Gpg }}
 ARG SONAR_VERSION={{ $sonarqube.Version }}
 ARG GOSU_VERSION={{ $gosu.Version }}
