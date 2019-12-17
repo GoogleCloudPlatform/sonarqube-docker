@@ -26,13 +26,14 @@ versions:
     templateSubDir: '8'
     templateArgs:
       exporter: 'true'
+      c2dRelease: '8.0.0'
     tags:
       - '8.0-debian9'
       - '8-debian9'
       - '8.0'
       - '8'
       - 'latest'
-    from: *from
+    from: gcr.io/google-appengine/debian9
     packages:
       gosu: *gosu
       sonarqube:
@@ -43,13 +44,14 @@ versions:
     templateSubDir: '8'
     templateArgs:
       exporter: 'true'
+      c2dRelease: '7.9.0'
     tags:
       - '7.9-debian9'
       - '7-debian9'
       - '7.9'
       - '7'
       - 'latest'
-    from: *from
+    from: gcr.io/google-appengine/debian9
     packages:
       gosu: *gosu
       sonarqube:

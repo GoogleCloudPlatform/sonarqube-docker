@@ -2,6 +2,7 @@ FROM gcr.io/google-appengine/debian9 as downloader
 {{- $gosu := index .Packages "gosu" }}
 {{- $sonarqube := index .Packages "sonarqube" }}
 {{- $exporter := index .TemplateArgs "exporter" }}
+{{- $c2dRelease := index .TemplateArgs "c2dRelease" }}
 ARG SONAR_GPG={{ $sonarqube.Gpg }}
 ARG SONAR_VERSION={{ $sonarqube.Version }}
 ARG GOSU_VERSION={{ $gosu.Version }}
@@ -42,7 +43,7 @@ RUN  set -x \
    && rm -rf /opt/tmp
 {{- end }}
 
-FROM gcr.io/google-appengine/debian9
+FROM {{ .From }}
 
 # Add debian backport source repository
 RUN set -x \
@@ -61,7 +62,7 @@ ENV SONARQUBE_HOME=/opt/sonarqube \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
-ENV C2D_RELEASE=${SONAR_VERSION}
+ENV C2D_RELEASE {{ $c2dRelease }}
 
 # Http port
 EXPOSE 9000
