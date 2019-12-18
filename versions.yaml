@@ -14,7 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 _variables:
-  from: &from gcr.io/google-appengine/openjdk
   gpg: &gpg F1182E81C792928921DBCAB4CFCA4A29D26468DE
   gosu: &gosu
     version: '1.10'
@@ -26,13 +25,14 @@ versions:
     templateSubDir: '8'
     templateArgs:
       exporter: 'true'
+      c2dRelease: '8.0.0'
     tags:
       - '8.0-debian9'
       - '8-debian9'
       - '8.0'
       - '8'
       - 'latest'
-    from: *from
+    from: gcr.io/google-appengine/debian9
     packages:
       gosu: *gosu
       sonarqube:
@@ -43,13 +43,14 @@ versions:
     templateSubDir: '8'
     templateArgs:
       exporter: 'true'
+      c2dRelease: '7.9.0'
     tags:
       - '7.9-debian9'
       - '7-debian9'
       - '7.9'
       - '7'
       - 'latest'
-    from: *from
+    from: gcr.io/google-appengine/debian9
     packages:
       gosu: *gosu
       sonarqube:
@@ -63,7 +64,7 @@ versions:
     tags:
       - '7.8-debian9'
       - '7.8'
-    from: *from
+    from: gcr.io/google-appengine/openjdk
     packages:
       gosu: *gosu
       sonarqube:
@@ -77,7 +78,7 @@ versions:
     tags:
       - '7.6-debian9'
       - '7.6'
-    from: *from
+    from: gcr.io/google-appengine/openjdk
     packages:
       gosu: *gosu
       sonarqube:
