@@ -1,13 +1,9 @@
 FROM gcr.io/google-appengine/debian9 as downloader
-{{- $gosu := index .Packages "gosu" }}
-{{- $sonarqube := index .Packages "sonarqube" }}
-{{- $exporter := index .TemplateArgs "exporter" }}
-{{- $c2dRelease := index .TemplateArgs "c2dRelease" }}
 
-ARG SONAR_GPG={{ $sonarqube.Gpg }}
-ARG SONAR_VERSION={{ $sonarqube.Version }}
-ARG GOSU_VERSION={{ $gosu.Version }}
-ARG GOSU_GPG={{ $gosu.Gpg }}
+ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
+ARG SONAR_VERSION=7.7
+ARG GOSU_VERSION=1.10
+ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 RUN set -x \
  && apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr ca-certificates wget apache2-utils git unzip \
@@ -15,9 +11,37 @@ RUN set -x \
  && wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
  && wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
  && export GNUPGHOME="$(mktemp -d)" \
- && {{ `gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG` | KeyServersRetryLoop "  " }} \
+ && found='' && \
+  for server in \
+    pool.sks-keyservers.net \
+    na.pool.sks-keyservers.net \
+    eu.pool.sks-keyservers.net \
+    oc.pool.sks-keyservers.net \
+    ha.pool.sks-keyservers.net \
+    hkp://p80.pool.sks-keyservers.net:80 \
+    hkp://keyserver.ubuntu.com:80 \
+    pgp.mit.edu \
+  ; do \
+    gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
+      && found=yes && break; \
+  done; \
+  test -n "$found" \
  && gpg --no-tty --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && {{ `gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG` | KeyServersRetryLoop "  " }} \
+ && found='' && \
+  for server in \
+    pool.sks-keyservers.net \
+    na.pool.sks-keyservers.net \
+    eu.pool.sks-keyservers.net \
+    oc.pool.sks-keyservers.net \
+    ha.pool.sks-keyservers.net \
+    hkp://p80.pool.sks-keyservers.net:80 \
+    hkp://keyserver.ubuntu.com:80 \
+    pgp.mit.edu \
+  ; do \
+    gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG \
+      && found=yes && break; \
+  done; \
+  test -n "$found" \
  && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
  && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
  && gpg --no-tty --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
@@ -26,8 +50,6 @@ RUN set -x \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
-
-{{- if (eq $exporter "true") }}
 COPY license-checksum /
 
 RUN  set -x \
@@ -42,19 +64,18 @@ RUN  set -x \
    && mv /opt/tmp/prometheus-exporter-1.0.0.jar /opt/sonarqube/extensions/plugins/ \
    && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp
-{{- end }}
 
-FROM {{ .From }}
+FROM gcr.io/google-appengine/openjdk
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION={{ $sonarqube.Version }} \
+  SONAR_VERSION=7.7 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
-ENV C2D_RELEASE {{ $c2dRelease }}
+ENV C2D_RELEASE 7.7.0
 
 # Http port
 EXPOSE 9000
@@ -62,10 +83,7 @@ COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
 COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
 COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
 COPY --from=downloader /opt/sonarqube /opt/sonarqube
-
-{{- if (eq $exporter "true") }}
 COPY --from=downloader /usr/share/LICENSE-prometheus-exporter /usr/share/LICENSE-prometheus-exporter
-{{- end }}
 
 RUN set -x \
   && groupadd -r sonarqube && useradd -r -g sonarqube sonarqube \
