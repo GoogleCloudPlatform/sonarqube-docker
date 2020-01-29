@@ -40,13 +40,15 @@ versions:
         gpg: *gpg
   - dir: '7/debian9/7.9'
     repo: sonarqube7
-    templateSubDir: '8'
+    templateSubDir: '7'
     templateArgs:
       exporter: 'true'
-      c2dRelease: '7.9.0'
+      c2dRelease: '7.9.2'
     tags:
+      - '7.9.2-debian9'
       - '7.9-debian9'
       - '7-debian9'
+      - '7.9.2'
       - '7.9'
       - '7'
       - 'latest'
@@ -54,7 +56,7 @@ versions:
     packages:
       gosu: *gosu
       sonarqube:
-        version: '8.0'
+        version: '7.9.2'
         gpg: *gpg
   - dir: '7/debian9/7.8'
     repo: sonarqube7
