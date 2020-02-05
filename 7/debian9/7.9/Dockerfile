@@ -67,6 +67,15 @@ RUN  set -x \
 
 FROM gcr.io/google-appengine/debian9
 
+# Add debian backport source repository
+RUN set -x \
+    && echo 'deb http://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list \
+    && apt update \
+    && apt install -y \
+    openjdk-11-jdk \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV SONARQUBE_HOME=/opt/sonarqube \
   SONAR_VERSION=7.9.2 \
   # Database configuration

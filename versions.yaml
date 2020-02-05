@@ -40,7 +40,7 @@ versions:
         gpg: *gpg
   - dir: '7/debian9/7.9'
     repo: sonarqube7
-    templateSubDir: '7'
+    templateSubDir: '8'
     templateArgs:
       exporter: 'true'
       c2dRelease: '7.9.2'
