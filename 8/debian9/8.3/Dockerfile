@@ -1,7 +1,8 @@
 FROM gcr.io/google-appengine/debian9 as downloader
 
 ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
-ARG SONAR_VERSION=8.2
+ARG SONAR_VERSION=8.3
+ARG SONAR_TAG=8.3.0.34182
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -42,11 +43,11 @@ RUN set -x \
       && found=yes && break; \
   done; \
   test -n "$found" \
- && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
- && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
+ && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_TAG.zip \
+ && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_TAG.zip.asc \
  && gpg --no-tty --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
  && unzip /opt/sonarqube.zip -d /opt/ \
- && mv /opt/sonarqube-$SONAR_VERSION /opt/sonarqube \
+ && mv /opt/sonarqube-$SONAR_TAG /opt/sonarqube \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
@@ -77,14 +78,14 @@ RUN set -x \
     && rm -rf /var/lib/apt/lists/*
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION=8.2 \
+  SONAR_VERSION=8.3 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
-ENV C2D_RELEASE 8.2.0
+ENV C2D_RELEASE 8.3.0
 
 # Http port
 EXPOSE 9000
