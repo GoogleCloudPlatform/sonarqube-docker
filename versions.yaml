@@ -26,18 +26,17 @@ versions:
     templateArgs:
       exporter: 'true'
       c2dRelease: '8.3.0'
-      sonarqubeTag: '8.3.0.34182'
     tags:
       - '8.3-debian9'
       - '8-debian9'
       - '8.3'
       - '8'
       - 'latest'
-    from: gcr.io/google-appengine/debian9
+    from: gcr.io/google-appengine/debian10
     packages:
       gosu: *gosu
       sonarqube:
-        version: '8.3'
+        version: '8.3.0.34182'
         gpg: *gpg
   - dir: '7/debian9/7.9'
     repo: sonarqube7
@@ -45,7 +44,6 @@ versions:
     templateArgs:
       exporter: 'true'
       c2dRelease: '7.9.3'
-      sonarqubeTag: '7.9.3'
     tags:
       - '7.9.3-debian9'
       - '7.9-debian9'
@@ -54,7 +52,7 @@ versions:
       - '7.9'
       - '7'
       - 'latest'
-    from: gcr.io/google-appengine/debian9
+    from: gcr.io/google-appengine/debian10
     packages:
       gosu: *gosu
       sonarqube:

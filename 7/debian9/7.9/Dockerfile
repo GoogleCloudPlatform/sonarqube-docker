@@ -1,8 +1,7 @@
-FROM gcr.io/google-appengine/debian9 as downloader
+FROM gcr.io/google-appengine/debian10 as downloader
 
 ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
 ARG SONAR_VERSION=7.9.3
-ARG SONAR_TAG=7.9.3
 ARG GOSU_VERSION=1.10
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -43,11 +42,11 @@ RUN set -x \
       && found=yes && break; \
   done; \
   test -n "$found" \
- && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_TAG.zip \
- && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_TAG.zip.asc \
+ && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
+ && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
  && gpg --no-tty --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
  && unzip /opt/sonarqube.zip -d /opt/ \
- && mv /opt/sonarqube-$SONAR_TAG /opt/sonarqube \
+ && mv /opt/sonarqube-$SONAR_VERSION /opt/sonarqube \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
@@ -66,11 +65,10 @@ RUN  set -x \
    && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp
 
-FROM gcr.io/google-appengine/debian9
+FROM gcr.io/google-appengine/debian10
 
 # Add debian backport source repository
 RUN set -x \
-    && echo 'deb http://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list \
     && apt update \
     && apt install -y \
     openjdk-11-jdk \
