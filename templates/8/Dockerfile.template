@@ -1,4 +1,4 @@
-FROM gcr.io/google-appengine/debian9 as downloader
+FROM {{ .From }} as downloader
 {{- $gosu := index .Packages "gosu" }}
 {{- $sonarqube := index .Packages "sonarqube" }}
 {{- $exporter := index .TemplateArgs "exporter" }}
@@ -48,7 +48,6 @@ FROM {{ .From }}
 
 # Add debian backport source repository
 RUN set -x \
-    && echo 'deb http://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list \
     && apt update \
     && apt install -y \
     openjdk-11-jdk \
