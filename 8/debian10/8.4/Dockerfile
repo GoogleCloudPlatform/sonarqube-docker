@@ -1,7 +1,7 @@
-FROM gcr.io/google-appengine/debian9 as downloader
+FROM marketplace.gcr.io/google/debian10 as downloader
 
 ARG SONAR_GPG=F1182E81C792928921DBCAB4CFCA4A29D26468DE
-ARG SONAR_VERSION=7.7
+ARG SONAR_VERSION=8.4.0.35506
 ARG GOSU_VERSION=1.11
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -50,6 +50,7 @@ RUN set -x \
  && cd /usr/local/src \
  && git clone --depth=1 https://github.com/SonarSource/sonarqube.git \
  && rm -rf /opt/sonarqube/bin/*
+
 COPY license-checksum /
 
 RUN  set -x \
@@ -65,17 +66,25 @@ RUN  set -x \
    && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp
 
-FROM gcr.io/google-appengine/openjdk
+FROM marketplace.gcr.io/google/debian10
+
+# Add debian backport source repository
+RUN set -x \
+    && apt update \
+    && apt install -y \
+    openjdk-11-jdk \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION=7.7 \
+  SONAR_VERSION=8.4.0.35506 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
-ENV C2D_RELEASE 7.7.0
+ENV C2D_RELEASE 8.4.0
 
 # Http port
 EXPOSE 9000
@@ -83,6 +92,7 @@ COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
 COPY --from=downloader /usr/local/src/gosu.tar.gz /usr/local/src/gosu.tar.gz
 COPY --from=downloader /usr/local/src/sonarqube /usr/local/src/sonarqube
 COPY --from=downloader /opt/sonarqube /opt/sonarqube
+
 COPY --from=downloader /usr/share/LICENSE-prometheus-exporter /usr/share/LICENSE-prometheus-exporter
 
 RUN set -x \
