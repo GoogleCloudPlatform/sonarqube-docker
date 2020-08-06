@@ -45,16 +45,16 @@ versions:
       version: '1.11'
     sonarqube:
       gpg: F1182E81C792928921DBCAB4CFCA4A29D26468DE
-      version: 7.9.3
+      version: 7.9.4
   repo: sonarqube7
   tags:
-  - 7.9.3-debian10
+  - 7.9.4-debian10
   - 7.9-debian10
   - 7-debian10
-  - 7.9.3
+  - 7.9.4
   - '7.9'
   - '7'
   - latest
   templateArgs:
-    c2dRelease: 7.9.3
+    c2dRelease: 7.9.4
 
