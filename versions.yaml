@@ -25,18 +25,18 @@ versions:
       version: '1.11'
     sonarqube:
       gpg: F1182E81C792928921DBCAB4CFCA4A29D26468DE
-      version: 8.4.1.35646
+      version: 8.4.2.36762
   repo: sonarqube8
   tags:
-  - 8.4.1-debian10
+  - 8.4.2-debian10
   - 8.4-debian10
   - 8-debian10
-  - 8.4.1
+  - 8.4.2
   - '8.4'
   - '8'
   - latest
   templateArgs:
-    c2dRelease: 8.4.1
+    c2dRelease: 8.4.2
 - dir: 7/debian10/7.9
   from: marketplace.gcr.io/google/debian10
   packages:
