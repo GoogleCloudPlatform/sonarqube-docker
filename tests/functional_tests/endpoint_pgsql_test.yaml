@@ -31,7 +31,7 @@ teardown:
 target: some-sonarqube-$UNIQUE-id
 tests:
 - name: test REST API on PostgreSQL
-  command: ['wget', '-O', '-', 'http://localhost:9000/api/prometheus/metrics']
+  command: ['wget', '-O', '-', '--http-user=admin', '--http-password=admin', '--auth-no-challenge', 'http://localhost:9000/api/prometheus/metrics']
   expect:
     stdout:
       contain: '# HELP sonarqube_vulnerabilities Vulnerabilities'
