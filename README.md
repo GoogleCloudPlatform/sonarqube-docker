@@ -76,9 +76,38 @@ docker run -it --rm\
   -d \
   marketplace.gcr.io/google/sonarqube8
 ```
-
-
 ### <a name="adding-persistence-docker"></a>Adding persistence
+
+Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
+```yaml
+version: "2"
+services:
+  sonarqube:
+    container_name: some-sonaqube
+    image: marketplace.gcr.io/google/sonarqube8
+    expose:
+      - 9000
+    ports:
+      - 127.0.0.1:9000:9000
+    networks:
+      - sonarnet
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar 
+      - SONARQUBE_JDBC_URL=
+```
+Or you can use `docker run` directly:
+
+```shell
+docker run \
+  --name some-redis \
+  -p 6379:6379 \
+  -v /path/to/your/redis.conf:/etc/redis/redis.conf \
+  -d \
+  marketplace.gcr.io/google/redis5 \
+  /etc/redis/redis.conf
+```
 
 ## <a name="configurations-docker"></a>Configurations
 
