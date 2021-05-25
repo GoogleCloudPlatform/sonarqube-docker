@@ -102,7 +102,7 @@ Or you can use `docker run` directly:
 
 ```shell
 docker run -it --rm\
-  --name some-sonaqube \
+  --name some-sonarqube \
   -p 127.0.0.1:9000:9000 \
   --expose 9000 \
   -d \
@@ -152,15 +152,17 @@ then you can use `docker run` directly:
 
 ```shell
 docker run -it --rm \
-  --name some-sonaqube \
+  --network sonarnetwork \
+  --name some-sonarqube \
   -p 127.0.0.1:9000:9000 \
   --expose 9000 \
   -d \
+  -e SONARQUBE_JDBC_USERNAME=sonar \
+  -e SONARQUBE_JDBC_PASSWORD=sonar \
   -v sonarqube_conf:/opt/sonarqube/conf \
   -v sonarqube_data:/opt/sonarqube/data \
   -v sonarqube_extensions:/opt/sonarqube/extensions \
   -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
-  --network sonarnetwork
   marketplace.gcr.io/google/sonarqube8
 ```
 ```shell
