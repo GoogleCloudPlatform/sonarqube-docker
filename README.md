@@ -130,7 +130,8 @@ services:
       - 127.0.0.1:9000:9000
     environment:
       - SONARQUBE_JDBC_USERNAME=sonar
-      - SONARQUBE_JDBC_PASSWORD=sonar 
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      
     volumes:
       - ./sonarqube_conf:/opt/sonarqube/conf
       - ./sonarqube_data:/opt/sonarqube/data
@@ -168,7 +169,7 @@ docker run -it --rm \
 ```shell
 docker run -it --rm \
   --network sonarnetwork
-  --name sone-postgrees \
+  --name some-postgrees \
   -d \ 
   -e POSTGRES_USER=sonar \
   -e POSTGRES_PASSWORD=sonar \
