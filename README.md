@@ -96,17 +96,25 @@ services:
       - SONARQUBE_JDBC_USERNAME=sonar
       - SONARQUBE_JDBC_PASSWORD=sonar 
       - SONARQUBE_JDBC_URL=
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
 ```
 Or you can use `docker run` directly:
 
 ```shell
-docker run \
-  --name some-redis \
-  -p 6379:6379 \
-  -v /path/to/your/redis.conf:/etc/redis/redis.conf \
+docker run -it --rm\
+  --name some-sonaqube \
+  -p 127.0.0.1:9000:9000 \
+  --expose 9000 \
   -d \
-  marketplace.gcr.io/google/redis5 \
-  /etc/redis/redis.conf
+  -v sonarqube_conf:/opt/sonarqube/conf \
+  -v sonarqube_data:/opt/sonarqube/data \
+  -v sonarqube_extensions:/opt/sonarqube/extensions \
+  -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
+  marketplace.gcr.io/google/sonarqube8
 ```
 
 ## <a name="configurations-docker"></a>Configurations
