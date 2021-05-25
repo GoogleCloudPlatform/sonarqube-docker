@@ -155,7 +155,7 @@ volumes:
   sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
-  sonarqube_bundled-plugins
+  sonarqube_bundled-plugins:
   postgresql:
   postgresql_data:
 ```
@@ -165,30 +165,30 @@ then you can use `docker run` directly:
 
 ```shell
 docker run -it --rm \
-  --network sonarnetwork \
-  --name some-sonarqube \
-  -p 127.0.0.1:9000:9000 \
-  --expose 9000 \
-  -d \
-  -e SONARQUBE_JDBC_USERNAME=sonar \
-  -e SONARQUBE_JDBC_PASSWORD=sonar \
-  -e SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar
-  -v sonarqube_conf:/opt/sonarqube/conf \
-  -v sonarqube_data:/opt/sonarqube/data \
-  -v sonarqube_extensions:/opt/sonarqube/extensions \
-  -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
-  marketplace.gcr.io/google/sonarqube8
+ --network sonarnetwork \
+ --name some-sonarqube \
+ -p 127.0.0.1:9000:9000 \
+ --expose 9000 \
+ -e SONARQUBE_JDBC_USERNAME=sonar \
+ -e SONARQUBE_JDBC_PASSWORD=sonar \
+ -e SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar
+ -v sonarqube_conf:/opt/sonarqube/conf \
+ -v sonarqube_data:/opt/sonarqube/data \
+ -v sonarqube_extensions:/opt/sonarqube/extensions \
+ -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
+ -d \
+marketplace.gcr.io/google/sonarqube8
 ```
 ```shell
 docker run -it --rm \
-  --network sonarnetwork
-  --name some-postgrees \
-  -d \ 
-  -e POSTGRES_USER=sonar \
-  -e POSTGRES_PASSWORD=sonar \
-  -v postgresql:/var/lib/postgresql \
-  -v postgresql_data:/var/lib/postgresql/data \
-  marketplace.gcr.io/google/postgresql13 
+--network sonarnetwork \
+--name some-postgrees \
+-e POSTGRES_USER=sonar \
+-e POSTGRES_PASSWORD=sonar \
+-v postgresql:/var/lib/postgresql \
+-v postgresql_data:/var/lib/postgresql/data \
+-d \
+marketplace.gcr.io/google/postgresql13
 ```
 
 Default Administrator credentials are  username`admin` password `admin`
