@@ -14,7 +14,7 @@ This is not an official Google product.
 
 This image contains an installation Redis. 
 
-For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/sonarqube7).
+For more information, see the [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/details/google/sonarqube8).
 
 ### Prerequisites
 
@@ -26,7 +26,7 @@ gcloud auth configure-docker
 ### Pull command
 
 ```shell
-gcloud docker -- pull marketplace.gcr.io/google/sonarqube7
+gcloud docker -- pull marketplace.gcr.io/google/sonarqube8
 ```
 
 # <a name="table-of-contents"></a>Table of Contents
@@ -53,7 +53,8 @@ Use the following content for the `docker-compose.yml` file, then run `docker-co
 version: "2"
 services:
   sonarqube:
-    image: marketplace.gcr.io/google/sonarqube7
+    container_name: some-sonaqube
+    image: marketplace.gcr.io/google/sonarqube8
     expose:
       - 9000
     ports:
@@ -65,7 +66,16 @@ services:
       - SONARQUBE_JDBC_PASSWORD=sonar 
       - SONARQUBE_JDBC_URL=
 ```
+Or you can use docker run directly:
 
+```shell
+docker run -it --rm\
+  --name some-sonaqube \
+  -p 127.0.0.1:9000:9000 \
+  --expose 9000 \
+  -d \
+  marketplace.gcr.io/google/sonarqube8
+```
 
 
 ### <a name="adding-persistence-docker"></a>Adding persistence
