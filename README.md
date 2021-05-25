@@ -53,7 +53,7 @@ Use the following content for the `docker-compose.yml` file, then run `docker-co
 version: "2"
 services:
   sonarqube:
-    image: sonarqube
+    image: marketplace.gcr.io/google/sonarqube7
     expose:
       - 9000
     ports:
