@@ -167,8 +167,8 @@ docker run -it --rm \
 ```
 ```shell
 docker run -it --rm \
+  --network sonarnetwork
   --name sone-postgrees \
-  --network sonarnetwork \
   -d \ 
   -e POSTGRES_USER=sonar \
   -e POSTGRES_PASSWORD=sonar \
