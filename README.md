@@ -97,6 +97,11 @@ services:
       - ./sonarqube_data:/opt/sonarqube/data
       - ./sonarqube_extensions:/opt/sonarqube/extensions
       - ./sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
 ```
 Or you can use `docker run` directly:
 
@@ -145,7 +150,14 @@ services:
       - POSTGRES_PASSWORD=sonar
     volumes:
       - ./postgresql:/var/lib/postgresql
-      - ./postgresql_data:/var/lib/postgresql/data    
+      - ./postgresql_data:/var/lib/postgresql/data
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins
+  postgresql:
+  postgresql_data:
 ```
 Run `docker network create sonarnetwork` command
 
@@ -160,6 +172,7 @@ docker run -it --rm \
   -d \
   -e SONARQUBE_JDBC_USERNAME=sonar \
   -e SONARQUBE_JDBC_PASSWORD=sonar \
+  -e SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar
   -v sonarqube_conf:/opt/sonarqube/conf \
   -v sonarqube_data:/opt/sonarqube/data \
   -v sonarqube_extensions:/opt/sonarqube/extensions \
