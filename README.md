@@ -164,20 +164,17 @@ Run `docker network create sonarnetwork` command
 then you can use `docker run` directly:
 
 ```shell
-docker run -it --rm \
- --network sonarnetwork \
- --name some-sonarqube \
- -p 127.0.0.1:9000:9000 \
- --expose 9000 \
- -e SONARQUBE_JDBC_USERNAME=sonar \
- -e SONARQUBE_JDBC_PASSWORD=sonar \
- -e SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar
- -v sonarqube_conf:/opt/sonarqube/conf \
- -v sonarqube_data:/opt/sonarqube/data \
- -v sonarqube_extensions:/opt/sonarqube/extensions \
- -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
- -d \
-marketplace.gcr.io/google/sonarqube8
+docker run -it --rm -e SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar \
+  -e SONARQUBE_JDBC_USERNAME=sonar \
+  -e SONARQUBE_JDBC_PASSWORD=sonar \
+  --name some-sonarqube \
+  -p 127.0.0.1:9000:9000 \
+  -d \
+  -v sonarqube_conf:/opt/sonarqube/conf \
+  -v sonarqube_data:/opt/sonarqube/data \
+  -v sonarqube_extensions:/opt/sonarqube/extensions \
+  -v sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins \
+  marketplace.gcr.io/google/sonarqube8
 ```
 ```shell
 docker run -it --rm \
