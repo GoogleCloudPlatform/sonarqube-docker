@@ -45,7 +45,28 @@ gcloud docker -- pull marketplace.gcr.io/google/sonarqube7
 
 ## <a name="running-sonarqube-docker"></a>Running Sonarqube
 
-### <a name="starting-a-sonarqube-instance-docker"></a>Starting a Sonarcube instance
+### <a name="starting-a-sonarqube-instance-docker"></a>Starting a Sonarqube instance
+
+Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
+```yaml
+version: "2"
+services:
+  sonarqube:
+    image: sonarqube
+    expose:
+      - 9000
+    ports:
+      - 127.0.0.1:9000:9000
+    networks:
+      - sonarnet
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar 
+      - SONARQUBE_JDBC_URL=
+```
+
+
 
 ### <a name="adding-persistence-docker"></a>Adding persistence
 
