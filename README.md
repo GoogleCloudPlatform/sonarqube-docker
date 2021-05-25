@@ -55,8 +55,6 @@ services:
   sonarqube:
     container_name: some-sonarqube
     image: marketplace.gcr.io/google/sonarqube8
-    expose:
-      - 9000
     ports:
       - 127.0.0.1:9000:9000
     environment:
@@ -69,7 +67,6 @@ Or you can use docker run directly:
 docker run -it --rm\
   --name some-sonarqube \
   -p 127.0.0.1:9000:9000 \
-  --expose 9000 \
   -d \
   marketplace.gcr.io/google/sonarqube8
 ```
@@ -85,8 +82,6 @@ services:
   sonarqube:
     container_name: some-sonarqube
     image: marketplace.gcr.io/google/sonarqube8
-    expose:
-      - 9000
     ports:
       - 127.0.0.1:9000:9000
     environment:
@@ -109,7 +104,6 @@ Or you can use `docker run` directly:
 docker run -it --rm\
   --name some-sonarqube \
   -p 127.0.0.1:9000:9000 \
-  --expose 9000 \
   -d \
   -v sonarqube_conf:/opt/sonarqube/conf \
   -v sonarqube_data:/opt/sonarqube/data \
@@ -129,8 +123,6 @@ services:
   sonarqube:
     container_name: some-sonarqube
     image: marketplace.gcr.io/google/sonarqube8
-    expose:
-      - 9000
     ports:
       - 127.0.0.1:9000:9000
     environment:
