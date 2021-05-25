@@ -172,8 +172,8 @@ docker run -it --rm \
   -d \ 
   -e POSTGRES_USER=sonar \
   -e POSTGRES_PASSWORD=sonar \
-  -v ./postgresql:/var/lib/postgresql \
-  -v ./postgresql_data:/var/lib/postgresql/data \
+  -v postgresql:/var/lib/postgresql \
+  -v postgresql_data:/var/lib/postgresql/data \
   marketplace.gcr.io/google/postgresql13 
 ```
 
