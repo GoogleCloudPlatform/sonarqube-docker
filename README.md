@@ -131,21 +131,21 @@ services:
     environment:
       - SONARQUBE_JDBC_USERNAME=sonar
       - SONARQUBE_JDBC_PASSWORD=sonar
-      
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://some-postgres:5432/sonar
     volumes:
       - ./sonarqube_conf:/opt/sonarqube/conf
       - ./sonarqube_data:/opt/sonarqube/data
       - ./sonarqube_extensions:/opt/sonarqube/extensions
       - ./sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugin
   postgrees:
+    container_name: some-postgres
     image: marketplace.gcr.io/google/postgresql13
     environment:
-      POSTGRES_USER=sonar
-      POSTGRES_PASSWORD=sonar
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
     volumes:
       - ./postgresql:/var/lib/postgresql
-      - ./postgresql_data:/var/lib/postgresql/data
-      
+      - ./postgresql_data:/var/lib/postgresql/data    
 ```
 Run `docker network create sonarnetwork` command
 
