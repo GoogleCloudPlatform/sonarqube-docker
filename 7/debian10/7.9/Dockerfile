@@ -22,7 +22,7 @@ RUN set -x \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
   ; do \
-    gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
+    gpg --no-tty --keyserver keys.openpgp.org --recv-keys $GOSU_GPG \
       && found=yes && break; \
   done; \
   test -n "$found" \
