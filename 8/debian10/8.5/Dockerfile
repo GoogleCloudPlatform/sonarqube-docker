@@ -11,9 +11,37 @@ RUN set -x \
  && wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
  && wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
  && export GNUPGHOME="$(mktemp -d)" \
- && gpg --no-tty --keyserver keys.openpgp.org  --recv-keys $GOSU_GPG \
+ && found='' && \
+  for server in \
+    pool.sks-keyservers.net \
+    na.pool.sks-keyservers.net \
+    eu.pool.sks-keyservers.net \
+    oc.pool.sks-keyservers.net \
+    ha.pool.sks-keyservers.net \
+    hkp://p80.pool.sks-keyservers.net:80 \
+    hkp://keyserver.ubuntu.com:80 \
+    pgp.mit.edu \
+  ; do \
+    gpg --no-tty --keyserver $server  --recv-keys $GOSU_GPG \
+      && found=yes && break; \
+  done; \
+  test -n "$found" \
  && gpg --no-tty --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && gpg --no-tty --keyserver keys.openpgp.org --recv-keys $SONAR_GPG \
+ && found='' && \
+  for server in \
+    pool.sks-keyservers.net \
+    na.pool.sks-keyservers.net \
+    eu.pool.sks-keyservers.net \
+    oc.pool.sks-keyservers.net \
+    ha.pool.sks-keyservers.net \
+    hkp://p80.pool.sks-keyservers.net:80 \
+    hkp://keyserver.ubuntu.com:80 \
+    pgp.mit.edu \
+  ; do \
+    gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG \
+      && found=yes && break; \
+  done; \
+  test -n "$found" \
  && wget -q -O /opt/sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip \
  && wget -q -O /opt/sonarqube.zip.asc https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
  && gpg --no-tty --batch --verify /opt/sonarqube.zip.asc /opt/sonarqube.zip \
