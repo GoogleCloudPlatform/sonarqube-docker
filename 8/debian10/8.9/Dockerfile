@@ -20,6 +20,7 @@ RUN set -x \
     ha.pool.sks-keyservers.net \
     hkp://p80.pool.sks-keyservers.net:80 \
     hkp://keyserver.ubuntu.com:80 \
+    keys.openpgp.org \
     pgp.mit.edu \
   ; do \
     gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
@@ -37,6 +38,7 @@ RUN set -x \
     hkp://p80.pool.sks-keyservers.net:80 \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
+    keys.openpgp.org \
   ; do \
     gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
       && found=yes && break; \

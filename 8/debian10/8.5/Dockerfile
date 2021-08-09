@@ -20,6 +20,7 @@ RUN set -x \
     ha.pool.sks-keyservers.net \
     hkp://p80.pool.sks-keyservers.net:80 \
     hkp://keyserver.ubuntu.com:80 \
+    keys.openpgp.org \
     pgp.mit.edu \
   ; do \
     gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
@@ -34,6 +35,7 @@ RUN set -x \
     eu.pool.sks-keyservers.net \
     oc.pool.sks-keyservers.net \
     ha.pool.sks-keyservers.net \
+    keys.openpgp.org \
     hkp://p80.pool.sks-keyservers.net:80 \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
