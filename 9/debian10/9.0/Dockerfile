@@ -1,7 +1,7 @@
 FROM marketplace.gcr.io/google/debian10 as downloader
 
 ARG SONAR_GPG=679F1EE92B19609DE816FDE81DB198F93525EC1A
-ARG SONAR_VERSION=9.0.0.45539
+ARG SONAR_VERSION=9.0.1.46107
 ARG GOSU_VERSION=1.11
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
 
@@ -22,7 +22,7 @@ RUN set -x \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
   ; do \
-    gpg --no-tty --keyserver $server  --recv-keys $GOSU_GPG \
+    gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG \
       && found=yes && break; \
   done; \
   test -n "$found" \
@@ -38,7 +38,7 @@ RUN set -x \
     hkp://keyserver.ubuntu.com:80 \
     pgp.mit.edu \
   ; do \
-    gpg --no-tty --keyserver $server --recv-keys $SONAR_GPG \
+    gpg --no-tty --keyserver $server --recv-keys $GOSU_GPG \
       && found=yes && break; \
   done; \
   test -n "$found" \
@@ -77,14 +77,14 @@ RUN set -x \
     && rm -rf /var/lib/apt/lists/*
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
-  SONAR_VERSION=9.0.0.45539 \
+  SONAR_VERSION=9.0.1.46107 \
   # Database configuration
   # Defaults to using H2
   SONARQUBE_JDBC_USERNAME=sonar \
   SONARQUBE_JDBC_PASSWORD=sonar \
   SONARQUBE_JDBC_URL=
 
-ENV C2D_RELEASE 9.0.0
+ENV C2D_RELEASE 9.0.1
 
 # Http port
 EXPOSE 9000
