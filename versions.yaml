@@ -17,7 +17,7 @@
 cloudbuild:
   enable_parallel: false
 versions:
-- dir: 9/debian10/9.0
+- dir: 9/debian10/9.1
   from: marketplace.gcr.io/google/debian10
   packages:
     gosu:
@@ -25,18 +25,18 @@ versions:
       version: '1.11'
     sonarqube:
       gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
-      version: 9.0.1.46107
+      version: 9.1.0.47736
   repo: sonarqube9
   tags:
-  - 9.0.1-debian10
-  - 9.0-debian10
+  - 9.1.0-debian10
+  - 9.1-debian10
   - 9-debian10
-  - 9.0.1
-  - '9.0'
+  - 9.1.0
+  - '9.1'
   - '9'
   - latest
   templateArgs:
-    c2dRelease: 9.0.1
+    c2dRelease: 9.1.0
 - dir: 8/debian10/8.9
   from: marketplace.gcr.io/google/debian10
   packages:
@@ -57,20 +57,4 @@ versions:
   - latest
   templateArgs:
     c2dRelease: 8.9.2
-- dir: 8/debian10/8.5
-  from: marketplace.gcr.io/google/debian10
-  packages:
-    gosu:
-      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      version: '1.11'
-    sonarqube:
-      gpg: F1182E81C792928921DBCAB4CFCA4A29D26468DE
-      version: 8.5.1.38104
-  repo: sonarqube8
-  tags:
-  - 8.5.1-debian10
-  - 8.5-debian10
-  - 8.5.1
-  - '8.5'
-  templateArgs:
-    c2dRelease: 8.5.1
+
