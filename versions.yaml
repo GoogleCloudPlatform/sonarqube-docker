@@ -45,16 +45,16 @@ versions:
       version: '1.11'
     sonarqube:
       gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
-      version: 8.9.2.46101
+      version: 8.9.3.48735
   repo: sonarqube8
   tags:
-  - 8.9.2-debian10
+  - 8.9.3-debian10
   - 8.9-debian10
   - 8-debian10
-  - 8.9.2
+  - 8.9.3
   - '8.9'
   - '8'
   - latest
   templateArgs:
-    c2dRelease: 8.9.2
+    c2dRelease: 8.9.3
 
