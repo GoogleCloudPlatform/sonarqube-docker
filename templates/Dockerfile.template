@@ -61,6 +61,10 @@ ENV SONARQUBE_HOME=/opt/sonarqube \
 
 ENV C2D_RELEASE {{ $c2dRelease }}
 
+# Workaround for CVE-2021-44228
+# https://www.docker.com/blog/apache-log4j-2-cve-2021-44228/
+ENV JAVA_OPTS="-Dlog4j.formatMsgNoLookups=true"
+
 # Http port
 EXPOSE 9000
 COPY --from=downloader /usr/local/bin/gosu /usr/local/bin/gosu
