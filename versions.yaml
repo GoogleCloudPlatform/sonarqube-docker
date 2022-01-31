@@ -24,7 +24,7 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     sonarqube:
-      gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
+      gpg: CFCA4A29D26468DE
       version: 8.7.1.42226
   repo: sonarqube8
   tags:
