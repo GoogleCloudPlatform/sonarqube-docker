@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -17,23 +17,44 @@
 cloudbuild:
   enable_parallel: false
 versions:
-- dir: 8/debian10/8.7
+- dir: 9/debian10/9.3
   from: marketplace.gcr.io/google/debian10
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     sonarqube:
-      gpg: CFCA4A29D26468DE
-      version: 8.7.1.42226
+      gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
+      version: 9.3.0.51899
+  repo: sonarqube9
+  tags:
+  - 9.3.0-debian10
+  - 9.3-debian10
+  - 9-debian10
+  - 9.3.0
+  - '9.3'
+  - '9'
+  - latest
+  templateArgs:
+    c2dRelease: 9.3.0
+- dir: 8/debian10/8.9
+  from: marketplace.gcr.io/google/debian10
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.11'
+    sonarqube:
+      gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
+      version: 8.9.7.52159
   repo: sonarqube8
   tags:
-  - 8.7.1-debian10
-  - 8.7-debian10
+  - 8.9.7-debian10
+  - 8.9-debian10
   - 8-debian10
-  - '8.7'
+  - 8.9.7
+  - '8.9'
   - '8'
   - latest
   templateArgs:
-    c2dRelease: 8.7.1
+    c2dRelease: 8.9.7
 
