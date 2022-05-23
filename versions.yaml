@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +24,14 @@ versions:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.11'
     sonarqube:
-      gpg: CFCA4A29D26468DE
+      gpg: 679F1EE92B19609DE816FDE81DB198F93525EC1A
       version: 8.7.1.42226
   repo: sonarqube8
   tags:
   - 8.7.1-debian10
   - 8.7-debian10
   - 8-debian10
+  - 8.7.1
   - '8.7'
   - '8'
   - latest
