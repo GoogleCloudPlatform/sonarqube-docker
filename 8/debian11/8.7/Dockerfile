@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian10 as downloader
+FROM marketplace.gcr.io/google/debian11 as downloader
 
 ARG SONAR_GPG=CFCA4A29D26468DE
 ARG SONAR_VERSION=8.7.1.42226
@@ -66,7 +66,7 @@ RUN  set -x \
    && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp
 
-FROM marketplace.gcr.io/google/debian10
+FROM marketplace.gcr.io/google/debian11
 
 # Add debian backport source repository
 RUN set -x \
