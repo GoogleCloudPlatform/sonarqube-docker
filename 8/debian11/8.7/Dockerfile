@@ -74,6 +74,7 @@ RUN set -x \
     && apt install -y \
     openjdk-11-jdk \
     wget \
+    openssl \
     && rm -rf /var/lib/apt/lists/*
 
 ENV SONARQUBE_HOME=/opt/sonarqube \
