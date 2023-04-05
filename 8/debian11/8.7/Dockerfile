@@ -1,6 +1,6 @@
-FROM marketplace.gcr.io/google/debian11 as downloader
+FROM marketplace.gcr.io/google/c2d-debian11 as downloader
 
-ARG SONAR_GPG=CFCA4A29D26468DE
+ARG SONAR_GPG=679F1EE92B19609DE816FDE81DB198F93525EC1A
 ARG SONAR_VERSION=8.7.1.42226
 ARG GOSU_VERSION=1.11
 ARG GOSU_GPG=B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -66,7 +66,7 @@ RUN  set -x \
    && mv /opt/tmp/LICENSE /usr/share/LICENSE-prometheus-exporter \
    && rm -rf /opt/tmp
 
-FROM marketplace.gcr.io/google/debian11
+FROM marketplace.gcr.io/google/c2d-debian11
 
 # Add debian backport source repository
 RUN set -x \
