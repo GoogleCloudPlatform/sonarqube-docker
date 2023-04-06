@@ -18,6 +18,7 @@ cloudbuild:
   enable_parallel: false
 versions:
 - dir: 8/debian11/8.7
+  templateSubDir: sonarqube8
   from: marketplace.gcr.io/google/debian11
   packages:
     gosu:
