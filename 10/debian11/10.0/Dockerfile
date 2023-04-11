@@ -7,14 +7,14 @@ ENV LANG='en_US.UTF-8' \
     LC_ALL='en_US.UTF-8'
 
 RUN apt update && \
-    apt-get install -y openjdk-11-jdk ca-certificates && \
+    apt-get install -y openjdk-17-jre-headless ca-certificates && \
     apt-get clean
 #
 # SonarQube setup
 #
 ARG SONARQUBE_VERSION=10.0.0.68432
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64 \
+ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64" \
     SONARQUBE_HOME=/opt/sonarqube \
     SONAR_VERSION="${SONARQUBE_VERSION}" \
     SQ_DATA_DIR="/opt/sonarqube/data" \

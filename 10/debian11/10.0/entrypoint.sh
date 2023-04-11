@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DEFAULT_CMD=('/opt/java/openjdk/bin/java' '-jar' 'lib/sonarqube.jar' '-Dsonar.log.console=true')
+DEFAULT_CMD=('/usr/lib/jvm/java-17-openjdk-amd64/bin/java' '-jar' 'lib/sonarqube.jar' '-Dsonar.log.console=true')
 
 # this if will check if the first argument is a flag
 # but only works if all arguments require a hyphenated flag
