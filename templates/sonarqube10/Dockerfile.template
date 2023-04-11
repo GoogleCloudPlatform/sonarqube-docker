@@ -4,11 +4,11 @@ FROM {{ .From }}
 
 LABEL org.opencontainers.image.url=https://github.com/SonarSource/docker-sonarqube
 
-ENV LANG='en_US.UTF-8' \
-    LANGUAGE='en_US:en' \
-    LC_ALL='en_US.UTF-8'
+# ENV LANG='en_US.UTF-8' \
+#     LANGUAGE='en_US:en' \
+#     LC_ALL='en_US.UTF-8'
 
-ENV C2D_RELEASE {{ $c2dRelease }}
+# ENV C2D_RELEASE {{ $c2dRelease }}
 
 RUN apt update && \
     apt-get install -y openjdk-17-jre-headless ca-certificates && \
