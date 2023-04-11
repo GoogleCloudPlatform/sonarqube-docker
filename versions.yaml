@@ -41,7 +41,7 @@ versions:
   templateSubDir: sonarqube10
   from: marketplace.gcr.io/google/debian11
   packages:
-    sonarqube10:
+    sonarqube:
       version: 10.0.0.68432
   repo: sonarqube10
   tags:

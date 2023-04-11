@@ -1,5 +1,5 @@
 FROM {{ .From }}
-{{- $sonarqube := index .Packages "sonarqube10" }}
+{{- $sonarqube := index .Packages "sonarqube" }}
 {{- $c2dRelease := index .TemplateArgs "c2dRelease" }}
 
 LABEL org.opencontainers.image.url=https://github.com/SonarSource/docker-sonarqube
