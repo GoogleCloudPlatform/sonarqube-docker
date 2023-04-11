@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -37,4 +37,19 @@ versions:
   - latest
   templateArgs:
     c2dRelease: 8.7.1
-
+- dir: 10/debian11/10.0
+  templateSubDir: sonarqube10
+  from: marketplace.gcr.io/google/debian11
+  packages:
+    sonarqube:
+      version: 10.0.0.68432
+  repo: sonarqube10
+  tags:
+  - 10.0.0-debian11
+  - 10.0-debian11
+  - 10-debian11
+  - '10.0'
+  - '10'
+  - latest
+  templateArgs:
+    c2dRelease: 10.0.0
