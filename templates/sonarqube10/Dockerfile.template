@@ -1,5 +1,5 @@
 FROM {{ .From }}
-{{- $sonarqube := index .Packages "sonarqube" }}
+{{- $sonarqube := index .Packages "sonarqube10" }}
 {{- $c2dRelease := index .TemplateArgs "c2dRelease" }}
 
 LABEL org.opencontainers.image.url=https://github.com/SonarSource/docker-sonarqube
@@ -56,7 +56,7 @@ RUN set -eux; \
     apt-get remove -y gnupg unzip curl; \
     rm -rf /var/lib/apt/lists/*;
 
-COPY entrypoint.sh $SONARQUBE_HOME/docker/
+COPY entrypoint.sh ${SONARQUBE_HOME}/docker/
 
 
 WORKDIR $SONARQUBE_HOME
