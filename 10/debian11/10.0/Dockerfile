@@ -9,9 +9,11 @@ ENV LANG='en_US.UTF-8' \
 ENV C2D_RELEASE 10.0.0
 
 RUN apt update && \
-    apt-get install -y openjdk-17-jre-headless ca-certificates && \
-    apt-get clean \
-    wget
+    apt-get install -y \
+    openjdk-17-jre-headless \
+    ca-certificates \
+    wget && \
+    apt-get clean 
 #
 # SonarQube setup
 #
