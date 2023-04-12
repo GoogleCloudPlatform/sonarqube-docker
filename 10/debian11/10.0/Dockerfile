@@ -1,10 +1,12 @@
-FROM marketplace.gcr.io/google/c2d-debian11
+FROM marketplace.gcr.io/google/debian11
 
 LABEL org.opencontainers.image.url=https://github.com/SonarSource/docker-sonarqube
 
 ENV LANG='en_US.UTF-8' \
     LANGUAGE='en_US:en' \
     LC_ALL='en_US.UTF-8'
+
+ENV C2D_RELEASE 10.0.0
 
 RUN apt update && \
     apt-get install -y openjdk-17-jre-headless ca-certificates && \
@@ -16,7 +18,7 @@ ARG SONARQUBE_VERSION=10.0.0.68432
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64" \
     SONARQUBE_HOME=/opt/sonarqube \
-    SONAR_VERSION="${SONARQUBE_VERSION}" \
+    SONAR_VERSION=10.0.0.68432 \
     SQ_DATA_DIR="/opt/sonarqube/data" \
     SQ_EXTENSIONS_DIR="/opt/sonarqube/extensions" \
     SQ_LOGS_DIR="/opt/sonarqube/logs" \
@@ -54,7 +56,8 @@ RUN set -eux; \
 
 COPY entrypoint.sh ${SONARQUBE_HOME}/docker/
 
-WORKDIR ${SONARQUBE_HOME}
+
+WORKDIR $SONARQUBE_HOME
 EXPOSE 9000
 
 USER sonarqube
