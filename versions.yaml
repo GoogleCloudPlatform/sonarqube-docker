@@ -41,9 +41,9 @@ versions:
   templateArgs:
     c2dRelease: 8.7.1
 - dir: 10/debian11/10.0
-  excludeTests:
-  - tests/functional_tests/endopoint_h2_test.yaml
-  - tests/functional_tests/endpoint_pgsql_test.yaml
+  excludedTests:
+  - tests/functional_tests/endpoint_h2_test_8.yaml
+  - tests/functional_tests/endpoint_pgsql_test_8.yaml
   templateSubDir: sonarqube10
   from: marketplace.gcr.io/google/debian11
   packages:
