@@ -18,9 +18,9 @@ cloudbuild:
   enable_parallel: false
 versions:
 - dir: 8/debian11/8.7
-  excludeTests:
-  - tests/functional_tests/endpoint_h2_test_sonar10.yaml
-  - tests/functional_tests/endpoint_pgsql_test_sonar10.yaml
+  excludedTests:
+  - tests/functional_tests/endpoint_h2_test_version10.yaml
+  - tests/functional_tests/endpoint_pgsql_test_version10.yaml
   templateSubDir: sonarqube8
   from: marketplace.gcr.io/google/debian11
   packages:
