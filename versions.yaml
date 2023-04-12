@@ -20,8 +20,8 @@ versions:
 - dir: 8/debian11/8.7
   templateSubDir: sonarqube8
   excludeTests:
-  - tests/functional_tests/endopoint_h2_test_sonar10.yaml
-  - tests/functional_tests/endpoint_pgsql_test_sonar10.yaml
+  - tests/functional_tests/endpoint_h2_test _sonar10.yaml
+  - tests/functional_tests/endpoint_pgsql_test _sonar10.yaml
   from: marketplace.gcr.io/google/debian11
   packages:
     gosu:
