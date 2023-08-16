@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian11
+FROM marketplace.gcr.io/google/c2d-debian11
 
 LABEL org.opencontainers.image.url=https://github.com/SonarSource/docker-sonarqube
 
